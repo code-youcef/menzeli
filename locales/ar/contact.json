@@ -1,0 +1,38 @@
+{
+  "title": "اتصل بنا",
+  "subtitle": "نود أن نسمع منك. فريقنا الودود موجود دائمًا للدردشة.",
+  "form": {
+    "first_name": "الاسم الأول",
+    "last_name": "الاسم الأخير",
+    "email": "البريد الإلكتروني",
+    "subject": "الموضوع",
+    "phone": "رقم الهاتف",
+    "message": "الرسالة",
+    "submit": "إرسال الرسالة",
+    "submitting": "جاري الإرسال...",
+    "placeholders": {
+      "first_name": "ليوبولدو",
+      "last_name": "ميراندا",
+      "email": "contact@menzeli.com",
+      "subject": "اختر موضوعًا",
+      "message": "رسالتك..."
+    },
+    "subjects": {
+      "general": "استفسار عام",
+      "support": "الدعم",
+      "sales": "المبيعات",
+      "partnership": "الشراكة"
+    }
+  },
+  "info": {
+    "office": "مكتبنا",
+    "location_label": "الموقع:",
+    "address": "123 شارع الأعمال، الجزائر العاصمة، الجزائر",
+    "email_label": "راسلنا عبر البريد الإلكتروني:",
+    "email_address": "contact@menzeli.com",
+    "phone_label": "اتصل بنا:",
+    "phone_number": "+213 555 123 456",
+    "hours_label": "ساعات العمل:",
+    "hours": "من الأحد إلى الخميس، 9 صباحًا - 5 مساءً"
+  }
+}

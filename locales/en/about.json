@@ -1,0 +1,17 @@
+{
+  "title": "About Menzeli",
+  "subtitle": "Revolutionizing Real Estate in Algeria",
+  "mission": {
+    "title": "Our Mission",
+    "description": "To simplify the process of buying, selling, and renting properties in Algeria through transparency, technology, and trust."
+  },
+  "stats": {
+    "listings": "Listings",
+    "users": "Active Users",
+    "cities": "Cities Covered"
+  },
+  "team": {
+    "title": "Meet our team",
+    "description": "We’re a dynamic group of individuals who are passionate about what we do and dedicated to delivering the best results for our clients."
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "title": "Contact Us",
+  "subtitle": "We'd love to hear from you. Our friendly team is always here to chat.",
+  "form": {
+    "first_name": "First name",
+    "last_name": "Last name",
+    "email": "Email",
+    "subject": "Subject",
+    "phone": "Phone number",
+    "message": "Message",
+    "submit": "Send message",
+    "submitting": "Sending...",
+    "placeholders": {
+      "first_name": "Leopoldo",
+      "last_name": "Miranda",
+      "email": "contact@menzeli.com",
+      "subject": "Select a subject",
+      "message": "Your message..."
+    },
+    "subjects": {
+      "general": "General Inquiry",
+      "support": "Support",
+      "sales": "Sales",
+      "partnership": "Partnership"
+    }
+  },
+  "info": {
+    "office": "Our Office",
+    "location_label": "Location:",
+    "address": "123 Business Avenue, Algiers, Algeria",
+    "email_label": "Email us:",
+    "email_address": "contact@menzeli.com",
+    "phone_label": "Call us:",
+    "phone_number": "+213 555 123 456",
+    "hours_label": "Business Hours:",
+    "hours": "Sunday to Thursday, 9 AM - 5 PM"
+  }
+}

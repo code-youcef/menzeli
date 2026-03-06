@@ -1,0 +1,53 @@
+{
+  "filters": {
+    "title": "search results",
+    "budget": "Budget",
+    "bedrooms": "No. of Bedrooms",
+    "bhk": "BHK",
+    "societies": "New Projects / Societies",
+    "furnishing": "Furnishing Status",
+    "clear_all": "Clear All",
+    "applied_filters": "Applied Filters",
+    "owner_verified": "Owner Verified",
+    "under_construction": "Under Construction",
+    "ready_to_move": "Ready To Move",
+    "with_photos": "With Photos",
+    "family_mode": "Family mode",
+    "sort_by": "Sort by",
+    "price": "Price",
+    "date": "Date",
+    "area": "Area",
+    "no_results": "No properties found matching your filters. Try adjusting your search criteria.",
+    "contact_owner": "Contact Owner",
+    "posted_by": "Posted on {{date}}",
+    "more": "More",
+    "verified": "Verified",
+    "features": "Features",
+    "furnishing_types": {
+      "unfurnished": "Unfurnished",
+      "semi_furnished": "Semi furnished",
+      "furnished": "Furnished",
+      "fully_furnished": "Fully furnished"
+    }
+  },
+  "details": {
+    "key_features": "Key Features",
+    "amenities": "Amenities",
+    "areas_lot": "Areas & Lot",
+    "status": "Status",
+    "location": "Location",
+    "living_space": "Living Space",
+    "schedule_tour": "Schedule tour",
+    "schedule_desc": "See your future home up close — book a tour with Menzeli today and let us help you find the perfect place!",
+    "property_id": "Property ID",
+    "property_name": "Property Name",
+    "full_name": "Full Name",
+    "enter_name": "Enter your full name",
+    "schedule": "Schedule",
+    "view_property": "View My Property",
+    "office_phone": "Office Phone",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "member_since": "Member since"
+  }
+}

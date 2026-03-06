@@ -2,42 +2,27 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AuthApi, Configuration } from "@/api/generated-client";
-import {
-  AuthLoginPostRequest,
-  AuthValidOtpPostRequest,
-  AuthFillNamePostRequest,
-  AuthLoginPost200Response,
-  AuthValidOtpPost200Response,
-} from "@/api/generated-client/models";
+import { AuthApi, AuthCompleteProfileOperationRequest, AuthRequestOtp200Response, AuthRequestOtpOperationRequest, AuthVerifyOtp200Response, AuthVerifyOtpOperationRequest, User } from "@/api/generated-client";
+import { apiConfig } from "@/lib/api-config";
+
 import { useMutation } from "@tanstack/react-query";
+import { AuthLoginPost200Response } from "@/api/generated-client/models/AuthLoginPost200Response";
+import { AuthValidOtpPost200Response } from "@/api/generated-client/models/AuthValidOtpPost200Response";
+import { AuthFillNamePostRequest } from "@/api/generated-client/models/AuthFillNamePostRequest";
+import { AuthLoginPostRequest } from "@/api/generated-client/models/AuthLoginPostRequest";
+import { AuthValidOtpPostRequest } from "@/api/generated-client/models/AuthValidOtpPostRequest";
 
 // Initialize AuthApi with configuration to read token from localStorage
-const apiConfig = new Configuration({
-  basePath: process.env.NEXT_PUBLIC_API_URL || "https://menzili-backend.onrender.com/api",
-  accessToken: () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token") || "";
-    }
-    return "";
-  },
-});
-
 const authApi = new AuthApi(apiConfig);
 
-interface User {
-  id?: string;
-  phone?: string;
-  name?: string;
-  [key: string]: any;
-}
+
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (phone: string) => Promise<AuthLoginPost200Response>;
-  verifyOtp: (phone: string, otp: string) => Promise<AuthValidOtpPost200Response>;
+  login: (phone: string) => Promise<AuthRequestOtp200Response>;
+  verifyOtp: (phone: string, otp: string) => Promise<AuthVerifyOtp200Response>;
   updateName: (name: string) => Promise<void>;
   logout: () => void;
 }
@@ -70,23 +55,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const loginMutation = useMutation({
-    mutationFn: (request: AuthLoginPostRequest) =>
-      authApi.authLoginPost({ authLoginPostRequest: request,acceptLanguage: "en", accept: "application/json" }),
+    mutationFn: (request: AuthRequestOtpOperationRequest) =>
+      authApi.authRequestOtp(request),
   });
 
   const verifyOtpMutation = useMutation({
-    mutationFn: (request: AuthValidOtpPostRequest) =>
-      authApi.authValidOtpPost({ authValidOtpPostRequest: request,acceptLanguage: "en", accept: "application/json"  }),
+    mutationFn: (request: AuthVerifyOtpOperationRequest) =>
+      authApi.authVerifyOtp(request),
   });
 
   const updateNameMutation = useMutation({
-    mutationFn: (request: AuthFillNamePostRequest) =>
-      authApi.authFillNamePost({ authFillNamePostRequest: request, authorization: "en", acceptLanguage: "en", accept: "application/json"    }),
+    mutationFn: (request: AuthCompleteProfileOperationRequest) =>
+      authApi.authCompleteProfile (request),
   });
 
   const login = async (phone: string) => {
     try {
-      return await loginMutation.mutateAsync({ phone });
+      return await loginMutation.mutateAsync({ "authRequestOtpRequest": { "phone": phone } });  
     } catch (error) {
       console.error("Login failed:", error);
       throw error;
@@ -96,11 +81,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const verifyOtp = async (phone: string, otpCode: string) => {
     try {
       const response = await verifyOtpMutation.mutateAsync({
-        phone,
-        otpCode,
+        "authVerifyOtpRequest": {
+          phone,
+          otpCode,
+        }
       });
 
-      if (response.data?.token) {
+      if (response?.data?.token) {
         localStorage.setItem("token", response.data.token);
         setIsAuthenticated(true);
         
@@ -122,7 +109,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const updateName = async (name: string) => {
     try {
-      const response = await updateNameMutation.mutateAsync({ name });
+      const response = await updateNameMutation.mutateAsync({ 
+        "authCompleteProfileRequest": {
+          name,
+        }
+       });
       
       if (response.data?.user) {
         const updatedUser = { ...user, ...response.data.user };

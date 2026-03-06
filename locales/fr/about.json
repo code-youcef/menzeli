@@ -1,0 +1,17 @@
+{
+  "title": "À propos de Menzeli",
+  "subtitle": "Révolutionner l'immobilier en Algérie",
+  "mission": {
+    "title": "Notre Mission",
+    "description": "Simplifier le processus d'achat, de vente et de location de biens immobiliers en Algérie grâce à la transparence, la technologie et la confiance."
+  },
+  "stats": {
+    "listings": "Annonces",
+    "users": "Utilisateurs Actifs",
+    "cities": "Villes Couvertes"
+  },
+  "team": {
+    "title": "Rencontrez notre équipe",
+    "description": "Nous sommes un groupe dynamique de personnes passionnées par ce que nous faisons et dévouées à fournir les meilleurs résultats pour nos clients."
+  }
+}

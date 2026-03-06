@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "title": "Votre <span class=\"text-blue-600\">Menzil</span> en Algérie est à portée de clic.",
+    "subtitle": "La place de marché immobilière la plus fiable pour acheter, louer ou vendre des biens en Algérie. D'Alger à Oran, trouvez la maison de vos rêves aujourd'hui.",
+    "search": {
+      "location": "Emplacement (ex: Hydra, Oran...)",
+      "type": "Type de bien",
+      "price": "Prix Max (DA)",
+      "button": "Rechercher"
+    }
+  },
+  "featured": {
+    "title": "Annonces en vedette",
+    "subtitle": "Découvrez des propriétés sélectionnées dans les quartiers les plus populaires.",
+    "view_all": "Voir toutes les annonces",
+    "for_rent": "À LOUER",
+    "for_sale": "À VENDRE",
+    "per_month": "/mois",
+    "beds": "Chambres",
+    "bed": "Chambre",
+    "baths": "Salles de bain",
+    "bath": "Salle de bain"
+  },
+  "promo": {
+    "find_home": {
+      "title": "Trouvez votre prochaine maison",
+      "subtitle": "Parcourez des milliers d'annonces et connectez-vous avec des vendeurs vérifiés dès aujourd'hui.",
+      "button": "Parcourir le marché"
+    },
+    "host": {
+      "title": "Êtes-vous un hôte ?",
+      "subtitle": "Listez votre propriété gratuitement et atteignez des millions d'acheteurs potentiels à travers le pays.",
+      "button": "Listez votre propriété"
+    }
+  },
+  "footer": {
+    "description": "La première place de marché immobilière en Algérie. Nous simplifions la façon dont les gens achètent, louent et vendent des biens grâce à la transparence et à la technologie.",
+    "explore": "Explorer",
+    "company": "Entreprise",
+    "support": "Support",
+    "copyright": "© 2026 Menzeli Real Estate. Fait avec ❤️ en Algérie.",
+    "contact": "Contactez-nous",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité",
+    "about": "À propos de nous"
+  },
+  "header": {
+    "browse": "Parcourir",
+    "about": "À propos",
+    "contact": "Contact",
+    "list_property": "Listez votre propriété",
+    "login": "Connexion",
+    "signup": "S'inscrire",
+    "logout": "Déconnexion"
+  }
+}

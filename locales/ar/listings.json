@@ -1,0 +1,53 @@
+{
+  "filters": {
+    "title": "نتائج البحث",
+    "budget": "الميزانية",
+    "bedrooms": "عدد الغرف",
+    "bhk": "غرف",
+    "societies": "مشاريع جديدة / مجمعات سكنية",
+    "furnishing": "التأثيث",
+    "clear_all": "مسح الكل",
+    "applied_filters": "الفلاتر المطبقة",
+    "owner_verified": "مالك موثق",
+    "under_construction": "قيد الإنشاء",
+    "ready_to_move": "جاهز للسكن",
+    "with_photos": "مع صور",
+    "family_mode": "وضع العائلة",
+    "sort_by": "ترتيب حسب",
+    "price": "السعر",
+    "date": "التاريخ",
+    "area": "المساحة",
+    "no_results": "لم يتم العثور على عقارات تطابق بحثك. حاول تعديل معايير البحث.",
+    "contact_owner": "اتصل بالمالك",
+    "posted_by": "نشر في {{date}}",
+    "more": "المزيد",
+    "verified": "موثق",
+    "features": "المميزات",
+    "furnishing_types": {
+      "unfurnished": "غير مفروش",
+      "semi_furnished": "نصف مفروش",
+      "furnished": "مفروش",
+      "fully_furnished": "مفروش بالكامل"
+    }
+  },
+  "details": {
+    "key_features": "المميزات الرئيسية",
+    "amenities": "وسائل الراحة",
+    "areas_lot": "المساحات والموقع",
+    "status": "الحالة",
+    "location": "الموقع",
+    "living_space": "مساحة المعيشة",
+    "schedule_tour": "حجز جولة",
+    "schedule_desc": "شاهد منزلك المستقبلي عن قرب - احجز جولة مع منزلي اليوم ودعنا نساعدك في العثور على المكان المثالي!",
+    "property_id": "رقم العقار",
+    "property_name": "اسم العقار",
+    "full_name": "الاسم الكامل",
+    "enter_name": "أدخل اسمك الكامل",
+    "schedule": "حجز",
+    "view_property": "عرض عقاري",
+    "office_phone": "هاتف المكتب",
+    "whatsapp": "واتساب",
+    "email": "البريد الإلكتروني",
+    "member_since": "عضو منذ"
+  }
+}

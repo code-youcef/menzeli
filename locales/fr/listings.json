@@ -1,0 +1,53 @@
+{
+  "filters": {
+    "title": "résultats de recherche",
+    "budget": "Budget",
+    "bedrooms": "Nb. de Chambres",
+    "bhk": "Pièces",
+    "societies": "Nouveaux Projets / Résidences",
+    "furnishing": "Meublé",
+    "clear_all": "Tout effacer",
+    "applied_filters": "Filtres appliqués",
+    "owner_verified": "Propriétaire Vérifié",
+    "under_construction": "En Construction",
+    "ready_to_move": "Prêt à emménager",
+    "with_photos": "Avec Photos",
+    "family_mode": "Mode Famille",
+    "sort_by": "Trier par",
+    "price": "Prix",
+    "date": "Date",
+    "area": "Surface",
+    "no_results": "Aucune propriété ne correspond à vos filtres. Essayez d'ajuster vos critères.",
+    "contact_owner": "Contacter",
+    "posted_by": "Publié le {{date}}",
+    "more": "Plus",
+    "verified": "Vérifié",
+    "features": "Caractéristiques",
+    "furnishing_types": {
+      "unfurnished": "Non meublé",
+      "semi_furnished": "Semi meublé",
+      "furnished": "Meublé",
+      "fully_furnished": "Entièrement meublé"
+    }
+  },
+  "details": {
+    "key_features": "Caractéristiques principales",
+    "amenities": "Équipements",
+    "areas_lot": "Surfaces & Terrain",
+    "status": "Statut",
+    "location": "Emplacement",
+    "living_space": "Espace de vie",
+    "schedule_tour": "Planifier une visite",
+    "schedule_desc": "Voyez votre future maison de près — réservez une visite avec Menzeli aujourd'hui et laissez-nous vous aider à trouver l'endroit parfait !",
+    "property_id": "ID de la propriété",
+    "property_name": "Nom de la propriété",
+    "full_name": "Nom complet",
+    "enter_name": "Entrez votre nom complet",
+    "schedule": "Planifier",
+    "view_property": "Voir ma propriété",
+    "office_phone": "Téléphone bureau",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "member_since": "Membre depuis"
+  }
+}

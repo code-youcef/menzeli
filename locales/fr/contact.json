@@ -1,0 +1,38 @@
+{
+  "title": "Contactez-nous",
+  "subtitle": "Nous aimerions avoir de vos nouvelles. Notre équipe amicale est toujours là pour discuter.",
+  "form": {
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "email": "Email",
+    "subject": "Sujet",
+    "phone": "Numéro de téléphone",
+    "message": "Message",
+    "submit": "Envoyer le message",
+    "submitting": "Envoi en cours...",
+    "placeholders": {
+      "first_name": "Leopoldo",
+      "last_name": "Miranda",
+      "email": "contact@menzeli.com",
+      "subject": "Sélectionnez un sujet",
+      "message": "Votre message..."
+    },
+    "subjects": {
+      "general": "Demande générale",
+      "support": "Support",
+      "sales": "Ventes",
+      "partnership": "Partenariat"
+    }
+  },
+  "info": {
+    "office": "Notre Bureau",
+    "location_label": "Emplacement:",
+    "address": "123 Avenue des Affaires, Alger, Algérie",
+    "email_label": "Envoyez-nous un email:",
+    "email_address": "contact@menzeli.com",
+    "phone_label": "Appelez-nous:",
+    "phone_number": "+213 555 123 456",
+    "hours_label": "Heures d'ouverture:",
+    "hours": "Dimanche à Jeudi, 9h - 17h"
+  }
+}
