@@ -20,7 +20,7 @@ export default async function DashboardLayout({
         <Sidebar locale={locale} />
 
         {/* Main Content */}
-        <div className="flex flex-1 flex-col lg:pl-64 ltr:lg:pr-64 rtl:lg:pl-0 rtl:lg:pr-64">
+        <div className="flex flex-1 flex-col lg:pl-64  rtl:lg:pl-0 rtl:lg:pr-64">
           {/* Header */}
           <DashboardHeader />
 

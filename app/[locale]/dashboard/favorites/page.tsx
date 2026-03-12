@@ -49,7 +49,7 @@ export default function FavoritesPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {favorites.map((property) => (
-          <Card key={property.id} className="overflow-hidden group hover:shadow-md transition-shadow relative">
+          <Card key={property.id} className="overflow-hidden py-0 group hover:shadow-md transition-shadow relative">
             <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
               {property.image ? (
                 <img

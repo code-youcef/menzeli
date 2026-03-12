@@ -95,18 +95,18 @@ export default async function MyListingsPage({
       {/* Tabs & View Toggle */}
       <div className="flex items-center justify-between border-b border-zinc-200 pb-4">
         <div className="flex items-center gap-6 overflow-x-auto pb-2 sm:pb-0">
-          <button className="whitespace-nowrap border-b-2 border-blue-600 pb-4 text-sm font-semibold text-blue-600">
+          <Link href={`/${locale}/dashboard/my-listings`} className="whitespace-nowrap border-b-2 border-blue-600 pb-4 text-sm font-semibold text-blue-600">
             {t("dashboard:listings.tabs.all")} ({listings.length})
-          </button>
-          <button className="whitespace-nowrap pb-4 text-sm font-medium text-zinc-500 hover:text-zinc-900">
+          </Link>
+          <Link href={`/${locale}/dashboard/my-listings?status=active`} className="whitespace-nowrap pb-4 text-sm font-medium text-zinc-500 hover:text-zinc-900">
             {t("dashboard:listings.tabs.active")} ({listings.filter(l => l.isReady).length})
-          </button>
-          <button className="whitespace-nowrap pb-4 text-sm font-medium text-zinc-500 hover:text-zinc-900">
+          </Link>
+          <Link href={`/${locale}/dashboard/my-listings?status=pending`} className="whitespace-nowrap pb-4 text-sm font-medium text-zinc-500 hover:text-zinc-900">
             {t("dashboard:listings.tabs.pending")} ({listings.filter(l => !l.isReady).length})
-          </button>
-          <button className="whitespace-nowrap pb-4 text-sm font-medium text-zinc-500 hover:text-zinc-900">
+          </Link>
+          <Link href={`/${locale}/dashboard/my-listings?status=sold`} className="whitespace-nowrap pb-4 text-sm font-medium text-zinc-500 hover:text-zinc-900">
             {t("dashboard:listings.tabs.sold")} (0)
-          </button>
+          </Link>
         </div>
         <div className="hidden items-center gap-2 sm:flex">
           <button className="rounded-lg bg-zinc-100 p-2 text-zinc-900">
