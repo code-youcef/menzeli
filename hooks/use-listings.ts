@@ -1,6 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import { ListingApi } from "@/api/generated-client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  ListingApi,
+  ListingResource,
+  ListingResourceFromJSON,
+  StoreRequest,
+  UpdateRequest,
+} from "@/api/generated-client";
 import { apiConfig } from "@/lib/api-config";
+import { useAuth } from '../components/providers/auth';
 
 const listingApi = new ListingApi(apiConfig);
 
@@ -14,29 +21,71 @@ export function useListings(params?: { perPage?: string }) {
   });
 }
 
+export function useCreateListing() {
+  const queryClient = useQueryClient();
+  const { token } = useAuth()
+  return useMutation({
+    mutationFn: (data: StoreRequest) =>
+      listingApi.listingsStore(
+        { storeRequest: data },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      ),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["listings"] });
+    },
+  });
+}
+
+export function useUpdateListing() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }: { id: number; data: UpdateRequest }) =>
+      listingApi.listingsUpdate({ listing: id, updateRequest: data }),
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["listings"] });
+      queryClient.invalidateQueries({ queryKey: ["listing", variables.id] });
+    },
+  });
+}
+
+export function useDeleteListing() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => listingApi.listingsDestroy({ listing: id }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["listings"] });
+    },
+  });
+}
+
 export function useListing(id: number) {
-  return useQuery({
+  return useQuery<ListingResource>({
     queryKey: ["listing", id],
     queryFn: async () => {
-      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      const token =
+        typeof window !== "undefined" ? localStorage.getItem("token") : null;
       const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       };
-      
+
       if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
+        headers["Authorization"] = `Bearer ${token}`;
       }
 
-      console.log({headers})
-
       const response = await fetch(`${apiConfig.basePath}/listings/${id}`, {
-        headers
+        headers,
       });
 
       if (!response.ok) {
         throw new Error("Failed to fetch listing");
       }
-      return response.json();
+      const json = await response.json();
+      return ListingResourceFromJSON(json.data || json);
     },
     enabled: !!id,
   });

@@ -4,6 +4,8 @@ import auth from '../locales/en/auth.json';
 import listings from '../locales/en/listings.json';
 import contact from '../locales/en/contact.json';
 import about from '../locales/en/about.json';
+import dashboard from '../locales/en/dashboard.json';
+// import notifications from '../locales/en/notifications.json';
 
 declare module 'i18next' {
   interface CustomTypeOptions {
@@ -14,6 +16,8 @@ declare module 'i18next' {
       listings: typeof listings;
       contact: typeof contact;
       about: typeof about;
+      dashboard: typeof dashboard;
+      // notifications: typeof notifications;
     };
   }
 }

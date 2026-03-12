@@ -2,15 +2,10 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AuthApi, AuthCompleteProfileOperationRequest, AuthRequestOtp200Response, AuthRequestOtpOperationRequest, AuthVerifyOtp200Response, AuthVerifyOtpOperationRequest, User } from "@/api/generated-client";
-import { apiConfig } from "@/lib/api-config";
+import { AuthApi, AuthCompleteProfileOperationRequest, AuthRequestOtp200Response, AuthRequestOtpOperationRequest, AuthVerifyOtp200Response, AuthVerifyOtpOperationRequest, User, UserFromJSON } from "@/api/generated-client";
+import { apiConfig, API_URL } from "@/lib/api-config";
 
-import { useMutation } from "@tanstack/react-query";
-import { AuthLoginPost200Response } from "@/api/generated-client/models/AuthLoginPost200Response";
-import { AuthValidOtpPost200Response } from "@/api/generated-client/models/AuthValidOtpPost200Response";
-import { AuthFillNamePostRequest } from "@/api/generated-client/models/AuthFillNamePostRequest";
-import { AuthLoginPostRequest } from "@/api/generated-client/models/AuthLoginPostRequest";
-import { AuthValidOtpPostRequest } from "@/api/generated-client/models/AuthValidOtpPostRequest";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 // Initialize AuthApi with configuration to read token from localStorage
 const authApi = new AuthApi(apiConfig);
@@ -18,22 +13,75 @@ const authApi = new AuthApi(apiConfig);
 
 
 interface AuthContextType {
-  user: User | null;
+  user: User | null | { phone: string };
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (phone: string) => Promise<AuthRequestOtp200Response>;
   verifyOtp: (phone: string, otp: string) => Promise<AuthVerifyOtp200Response>;
+  token: string | null;
   updateName: (name: string) => Promise<void>;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+
+export const isNotComplete = (user: User | null | { phone: string }): user is  { phone: string } => {
+  // @ts-ignore
+  return user?.phone && !user?.name ;
+};
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | { phone: string }>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    setIsAuthenticated(false);
+    router.push("/auth");
+  };
+
+  const { data: userData, isError , refetch} = useQuery({
+    queryKey: ['currentUser', token],
+    queryFn: async () => {
+      if (!token) return null;
+      
+      const response = await fetch(`${API_URL}/api/user`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch user');
+      }
+      
+      return response.json();
+    },
+    enabled: !!token && isAuthenticated,
+    refetchInterval: 60000,
+    retry: false,
+    staleTime: 60000,
+  });
+
+  useEffect(() => {
+    if (userData) {
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    if (isError) {
+      logout();
+    }
+  }, [isError]);
 
   useEffect(() => {
     // Check for existing token on mount
@@ -42,10 +90,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
     if (token) {
       setIsAuthenticated(true);
+      setToken(token);
       if (storedUser) {
         try {
         console.log({storedUser})
-          setUser(JSON.parse(storedUser));
+          setUser(UserFromJSON(JSON.parse(storedUser)));
         } catch (e) {
           console.error("Failed to parse stored user", e);
         }
@@ -53,6 +102,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (user && isNotComplete(user)) {
+     router.push("/auth")
+    }
+  }, [user]);
 
   const loginMutation = useMutation({
     mutationFn: (request: AuthRequestOtpOperationRequest) =>
@@ -66,7 +121,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const updateNameMutation = useMutation({
     mutationFn: (request: AuthCompleteProfileOperationRequest) =>
-      authApi.authCompleteProfile (request),
+      authApi.authCompleteProfile (request, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }),
   });
 
   const login = async (phone: string) => {
@@ -89,12 +149,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (response?.data?.token) {
         localStorage.setItem("token", response.data.token);
+        setToken(response.data.token);
         setIsAuthenticated(true);
-        
-        // If fillName is true, we might need to redirect or handle it
-        // For now, we assume basic auth is done
-        // Since we don't get user object here, we might not set user state yet
-        // or we set a partial user object with phone
+        if (response.data.fill_name) {
+          refetch()
+          return router.push("/");
+        }
         const partialUser = { phone };
         setUser(partialUser);
         localStorage.setItem("user", JSON.stringify(partialUser));
@@ -127,19 +187,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-    setIsAuthenticated(false);
-    router.push("/auth");
-  };
-
   return (
     <AuthContext.Provider
       value={{
         user,
         isAuthenticated,
+        token,
         isLoading,
         login,
         verifyOtp,

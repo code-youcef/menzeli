@@ -22,6 +22,8 @@
   "registries": {
     "@bundui": {
       "url": "https://bundui.io/api/registry/{name}.json"
-    }
+    },
+    "@joyco": "https://registry.joyco.studio/r/{name}.json",
+    "@elements": "https://www.tryelements.dev/r/{name}.json"
   }
 }

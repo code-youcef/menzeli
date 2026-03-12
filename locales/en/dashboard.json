@@ -1,0 +1,144 @@
+{
+  "sidebar": {
+    "overview": "Overview",
+    "my_listings": "My Listings",
+    "favorites": "Favorites",
+    "coins": "Coins & Subscriptions",
+    "settings": "Settings",
+    "post_listing": "Post a Listing",
+    "profile": "Profile"
+  },
+  "header": {
+    "search": "Search listings, locations...",
+    "properties": "Properties",
+    "agencies": "Agencies",
+    "pricing": "Pricing"
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "pro_user": "PRO USER",
+    "joined": "Joined {{date}}"
+  },
+  "stats": {
+    "active_listings": "Active Listings",
+    "total_views": "Total Views",
+    "coin_balance": "Coin Balance",
+    "top_up": "Top Up",
+    "coins": "Coins"
+  },
+  "activity": {
+    "title": "Recent Activity",
+    "view_all": "View All",
+    "columns": {
+      "property": "PROPERTY / TRANSACTION",
+      "type": "TYPE",
+      "status": "STATUS",
+      "views": "VIEWS / CHANGE",
+      "date": "DATE"
+    },
+    "types": {
+      "listing": "Listing",
+      "payment": "Payment"
+    },
+    "status": {
+      "active": "Active",
+      "completed": "Completed",
+      "pending": "Pending"
+    },
+    "footer": "Showing latest 3 activities. Check full history in the activities tab."
+  },
+  "listings": {
+    "title": "My Listings",
+    "subtitle": "Manage, track performance and promote your properties",
+    "add_new": "Add New Listing",
+    "search": "Search listings...",
+    "tabs": {
+      "all": "All",
+      "active": "Active",
+      "pending": "Pending",
+      "sold": "Sold"
+    },
+    "card": {
+      "views": "VIEWS",
+      "leads": "LEADS",
+      "edit": "Edit",
+      "promote": "Promote",
+      "insights": "Insights",
+      "sold": "Sold",
+      "view": "View"
+    },
+    "status": {
+      "active": "ACTIVE",
+      "pending": "PENDING",
+      "sold": "SOLD",
+      "promoted": "PROMOTED"
+    },
+    "empty": {
+      "title": "List New Property",
+      "subtitle": "Click to add a new listing to your portfolio"
+    },
+    "new": {
+      "title": "Create New Property",
+      "subtitle": "Fill in the details below to list your property"
+    }
+  },
+  "favorites_page": {
+    "title": "Favorites",
+    "subtitle": "Manage your saved properties ({{count}})",
+    "empty": {
+      "title": "No favorites yet",
+      "description": "Start exploring properties and save your favorites to view them here.",
+      "action": "Browse Properties"
+    },
+    "card": {
+      "no_image": "No Image",
+      "beds": "Beds",
+      "bath": "Bath",
+      "area": "m²",
+      "unknown_location": "Unknown Location"
+    }
+  },
+  "profile_page": {
+    "title": "My Profile",
+    "subtitle": "Update your account details and security preferences.",
+    "personal_info": {
+      "title": "Personal Information",
+      "member_since": "Member since {{date}}",
+      "change_photo": "Change Photo",
+      "remove": "Remove",
+      "full_name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "verified": "VERIFIED",
+      "account_status": "Account Status",
+      "active": "Active - All features enabled",
+      "inactive": "Inactive"
+    },
+    "security": {
+      "title": "Account Security",
+      "otp": {
+        "title": "Two-Factor Authentication (OTP)",
+        "description": "Receive a code via phone/email for every login."
+      },
+      "devices": {
+        "title": "Connected Devices",
+        "logout": "Log out",
+        "remove": "Remove",
+        "last_active": "Last active: {{time}}"
+      }
+    },
+    "overview": {
+      "title": "Account Overview",
+      "user_id": "User ID",
+      "joined_date": "Joined Date",
+      "last_login": "Last Login",
+      "user_role": "User Role",
+      "admin": "Administrator",
+      "user": "User"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "save": "Save Changes"
+    }
+  }
+}

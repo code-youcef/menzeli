@@ -15,12 +15,13 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Check, Info, Loader2 } from "lucide-react";
+import { Check, Info, Loader2, Heart } from "lucide-react";
 import { useListings } from "@/hooks/use-listings";
 import { API_URL } from "@/lib/api-config";
 import { useTranslation } from "react-i18next";
 import Image from "next/image";
 import Link from 'next/link';
+import { useFavoritesStore } from "@/stores/useFavoritesStore";
 
 const societies = [
   { id: "provident", name: "Provident Cosmo City" },
@@ -36,6 +37,7 @@ interface Props {
 export default function RealEstateFilterPage({ perPage = "10" }: Props) {
   const { t } = useTranslation("listings");
   const { data, isLoading } = useListings({ perPage });
+  const { isFavorite, toggleFavorite } = useFavoritesStore();
 
   const [budget, setBudget] = useState([20, 200]);
   const [selectedBedrooms, setSelectedBedrooms] = useState<number[]>([]);
@@ -52,6 +54,7 @@ export default function RealEstateFilterPage({ perPage = "10" }: Props) {
     if (!data?.data?.listing) return [];
     
     return data.data.listing.map((p) => ({
+      original: p,
       id: p.id,
       title: p.title || "Untitled Property",
       location: p.location ? `${p.location.city}, ${p.location.wilaya}` : "Unknown Location",
@@ -355,15 +358,29 @@ export default function RealEstateFilterPage({ perPage = "10" }: Props) {
                       {/* Property Image */}
                       <div className="relative">
                         <img
-                          src={`${API_URL}${property.image}`}
+                          src={property.image.startsWith('http') ? property.image : `${API_URL}${property.image}`}
                           alt={property.title}
                           className="aspect-square h-full w-full object-cover md:rounded-l-lg"
                         />
-                        {property.verified && (
-                          <Badge className="absolute top-2 right-2 bg-white text-green-600 hover:bg-white">
-                            <Check /> Verified
-                          </Badge>
-                        )}
+                        <div className="absolute top-2 right-2 flex flex-col gap-2 items-end">
+                          {property.verified && (
+                            <Badge className="bg-white text-green-600 hover:bg-white border-none shadow-sm">
+                              <Check className="w-3 h-3 mr-1" /> Verified
+                            </Badge>
+                          )}
+                          <Button
+                            size="icon"
+                            variant="secondary"
+                            className="h-8 w-8 rounded-full bg-white/90 hover:bg-white shadow-sm text-zinc-500 hover:text-red-500"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              toggleFavorite(property.original);
+                            }}
+                          >
+                            <Heart className={`h-4 w-4 ${isFavorite(property.id) ? "fill-red-500 text-red-500" : ""}`} />
+                          </Button>
+                        </div>
                       </div>
 
                       {/* Property Details */}

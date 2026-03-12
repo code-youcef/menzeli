@@ -1,0 +1,144 @@
+{
+  "sidebar": {
+    "overview": "Vue d'ensemble",
+    "my_listings": "Mes annonces",
+    "favorites": "Favoris",
+    "coins": "Coins & Abonnements",
+    "settings": "Paramètres",
+    "post_listing": "Déposer une annonce",
+    "profile": "Profil"
+  },
+  "header": {
+    "search": "Rechercher des annonces, lieux...",
+    "properties": "Propriétés",
+    "agencies": "Agences",
+    "pricing": "Tarifs"
+  },
+  "profile": {
+    "edit": "Modifier le profil",
+    "pro_user": "UTILISATEUR PRO",
+    "joined": "Rejoint le {{date}}"
+  },
+  "stats": {
+    "active_listings": "Annonces actives",
+    "total_views": "Vues totales",
+    "coin_balance": "Solde de Coins",
+    "top_up": "Recharger",
+    "coins": "Coins"
+  },
+  "activity": {
+    "title": "Activité récente",
+    "view_all": "Voir tout",
+    "columns": {
+      "property": "PROPRIÉTÉ / TRANSACTION",
+      "type": "TYPE",
+      "status": "STATUT",
+      "views": "VUES / CHANGEMENT",
+      "date": "DATE"
+    },
+    "types": {
+      "listing": "Annonce",
+      "payment": "Paiement"
+    },
+    "status": {
+      "active": "Actif",
+      "completed": "Terminé",
+      "pending": "En attente"
+    },
+    "footer": "Affichage des 3 dernières activités. Consultez l'historique complet dans l'onglet activités."
+  },
+  "listings": {
+    "title": "Mes Annonces",
+    "subtitle": "Gérez, suivez les performances et faites la promotion de vos propriétés",
+    "add_new": "Ajouter une annonce",
+    "search": "Rechercher des annonces...",
+    "tabs": {
+      "all": "Tout",
+      "active": "Actif",
+      "pending": "En attente",
+      "sold": "Vendu"
+    },
+    "card": {
+      "views": "VUES",
+      "leads": "CONTACTS",
+      "edit": "Modifier",
+      "promote": "Promouvoir",
+      "insights": "Statistiques",
+      "sold": "Vendu",
+      "view": "Voir"
+    },
+    "status": {
+      "active": "ACTIF",
+      "pending": "EN ATTENTE",
+      "sold": "VENDU",
+      "promoted": "PROMU"
+    },
+    "empty": {
+      "title": "Ajouter une propriété",
+      "subtitle": "Cliquez pour ajouter une nouvelle annonce à votre portefeuille"
+    },
+    "new": {
+      "title": "Créer une nouvelle propriété",
+      "subtitle": "Remplissez les détails ci-dessous pour lister votre propriété"
+    }
+  },
+  "favorites_page": {
+    "title": "Favoris",
+    "subtitle": "Gérez vos propriétés enregistrées ({{count}})",
+    "empty": {
+      "title": "Aucun favori pour le moment",
+      "description": "Commencez à explorer les propriétés et enregistrez vos favoris pour les voir ici.",
+      "action": "Parcourir les propriétés"
+    },
+    "card": {
+      "no_image": "Pas d'image",
+      "beds": "Chambres",
+      "bath": "Salle de bain",
+      "area": "m²",
+      "unknown_location": "Lieu inconnu"
+    }
+  },
+  "profile_page": {
+    "title": "Mon Profil",
+    "subtitle": "Mettez à jour vos informations et préférences de sécurité.",
+    "personal_info": {
+      "title": "Informations Personnelles",
+      "member_since": "Membre depuis {{date}}",
+      "change_photo": "Changer la photo",
+      "remove": "Supprimer",
+      "full_name": "Nom complet",
+      "email": "Adresse e-mail",
+      "phone": "Numéro de téléphone",
+      "verified": "VÉRIFIÉ",
+      "account_status": "Statut du compte",
+      "active": "Actif - Toutes les fonctionnalités activées",
+      "inactive": "Inactif"
+    },
+    "security": {
+      "title": "Sécurité du compte",
+      "otp": {
+        "title": "Authentification à deux facteurs (OTP)",
+        "description": "Recevoir un code par téléphone/e-mail à chaque connexion."
+      },
+      "devices": {
+        "title": "Appareils connectés",
+        "logout": "Déconnexion",
+        "remove": "Supprimer",
+        "last_active": "Dernière activité : {{time}}"
+      }
+    },
+    "overview": {
+      "title": "Aperçu du compte",
+      "user_id": "ID Utilisateur",
+      "joined_date": "Date d'inscription",
+      "last_login": "Dernière connexion",
+      "user_role": "Rôle utilisateur",
+      "admin": "Administrateur",
+      "user": "Utilisateur"
+    },
+    "actions": {
+      "cancel": "Annuler",
+      "save": "Enregistrer"
+    }
+  }
+}

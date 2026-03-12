@@ -19,7 +19,10 @@
     "beds": "Chambres",
     "bed": "Chambre",
     "baths": "Salles de bain",
-    "bath": "Salle de bain"
+    "bath": "Salle de bain",
+    "ready": "Prêt à emménager",
+    "under_construction": "En construction",
+    "no_listings": "Aucune annonce en vedette trouvée."
   },
   "promo": {
     "find_home": {
@@ -52,5 +55,29 @@
     "login": "Connexion",
     "signup": "S'inscrire",
     "logout": "Déconnexion"
-  }
+  },
+  "dropdown": {
+    "profile": "Profil",
+    "my_listings": "Mes annonces",
+    "favorites": "Favoris",
+    "settings": "Paramètres",
+    "help": "Aide",
+    "logout": "Déconnexion"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "mark_all_read": "Tout marquer comme lu",
+    "empty": "Pas de nouvelles notifications",
+    "new_message": "Nouveau message de {{user}}",
+    "listing_approved": "Votre annonce \"{{listing}}\" a été approuvée",
+    "listing_rejected": "Votre annonce \"{{listing}}\" a été rejetée",
+    "view": "Voir",
+    "time": {
+      "just_now": "À l'instant",
+      "min_ago": "il y a {{count}} min",
+      "hour_ago": "il y a {{count}} h",
+      "day_ago": "il y a {{count}} j"
+    }
+  },
+  "back_to_listings": "Retour aux annonces"
 }

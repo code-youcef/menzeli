@@ -19,7 +19,10 @@
     "beds": "غرف نوم",
     "bed": "غرفة نوم",
     "baths": "حمامات",
-    "bath": "حمام"
+    "bath": "حمام",
+    "ready": "جاهز للسكن",
+    "under_construction": "قيد الإنشاء",
+    "no_listings": "لا توجد عقارات مميزة."
   },
   "promo": {
     "find_home": {
@@ -52,5 +55,29 @@
     "login": "تسجيل الدخول",
     "signup": "إنشاء حساب",
     "logout": "تسجيل الخروج"
-  }
+  },
+  "dropdown": {
+    "profile": "الملف الشخصي",
+    "my_listings": "إعلاناتي",
+    "favorites": "المفضلة",
+    "settings": "الإعدادات",
+    "help": "المساعدة",
+    "logout": "تسجيل الخروج"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "mark_all_read": "تحديد الكل كمقروء",
+    "empty": "لا توجد إشعارات جديدة",
+    "new_message": "رسالة جديدة من {{user}}",
+    "listing_approved": "تمت الموافقة على إعلانك \"{{listing}}\"",
+    "listing_rejected": "تم رفض إعلانك \"{{listing}}\"",
+    "view": "عرض",
+    "time": {
+      "just_now": "الآن",
+      "min_ago": "منذ {{count}} دقيقة",
+      "hour_ago": "منذ {{count}} ساعة",
+      "day_ago": "منذ {{count}} يوم"
+    }
+  },
+  "back_to_listings": "العودة إلى القوائم"
 }

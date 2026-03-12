@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/components/providers/auth";
+import { useRouter, useSearchParams } from "next/navigation";
+import { isNotComplete, useAuth } from "@/components/providers/auth";
 import Header from "@/components/shared/header";
 import { useTranslation } from "react-i18next";
 
@@ -12,14 +12,16 @@ export default function AuthContent() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const [timer, setTimer] = useState(119); // 1:59
+  const [timer, setTimer] = useState(59); // 00:59
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { login, verifyOtp, updateName, user } = useAuth();
   const router = useRouter();
-  const { t } = useTranslation('auth');
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callback_url");
+  const { t } = useTranslation("auth");
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -37,17 +39,25 @@ export default function AuthContent() {
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
-  if (user && user.name) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (isNotComplete(user) && user) {
+      setStep(3);
+      return;
+    } else if (user) {
+      router.push(callbackUrl || "/");
+      return;
+    }
+  }, [user, callbackUrl]);
 
   const handleSendOTP = async () => {
     if (phoneNumber.length >= 9) {
       setLoading(true);
       setError("");
       try {
-        await login(phoneNumber);
+         const response = await login(`+213${phoneNumber}`);
+         
         setStep(2);
+        setOtp(response.data.otpCode.split(''));
         setTimer(119);
       } catch (err) {
         setError(t("step1.error_send"));
@@ -63,11 +73,11 @@ export default function AuthContent() {
       setLoading(true);
       setError("");
       try {
-        const response = await verifyOtp(phoneNumber, otpCode);
+        const response = await verifyOtp(`+213${phoneNumber}`, otpCode);
         if (!response.data?.fillName) {
           setStep(3);
         } else {
-          router.push("/");
+          router.push(callbackUrl || "/");
         }
       } catch (err) {
         setError(t("step2.error_verify"));
@@ -110,7 +120,10 @@ export default function AuthContent() {
     }
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       const prevInput = document.getElementById(`otp-${index - 1}`);
       prevInput?.focus();
@@ -155,9 +168,13 @@ export default function AuthContent() {
                   className="text-blue-600"
                 />
               </div>
-              
-              <h1 className="text-3xl font-bold text-slate-900 mb-2 text-center">{t("step1.title")}</h1>
-              <p className="text-slate-500 text-center mb-10">{t("step1.subtitle")}</p>
+
+              <h1 className="text-3xl font-bold text-slate-900 mb-2 text-center">
+                {t("step1.title")}
+              </h1>
+              <p className="text-slate-500 text-center mb-10">
+                {t("step1.subtitle")}
+              </p>
 
               {error && (
                 <div className="mb-4 w-full rounded-lg bg-red-50 p-3 text-sm text-red-600 border border-red-100 text-center">
@@ -168,32 +185,44 @@ export default function AuthContent() {
               <div className="w-full space-y-4">
                 <div className="flex gap-3">
                   <div className="w-1/3">
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">{t("step1.country")}</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                      {t("step1.country")}
+                    </label>
                     <div className="relative flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-3">
                       <div className="flex items-center gap-2">
                         <div className="flex h-4 w-5 overflow-hidden rounded-sm bg-slate-200 relative">
-                           {/* Algeria Flag Approximation */}
-                           <div className="absolute inset-y-0 left-0 w-1/3 bg-green-700"></div>
-                           <div className="absolute inset-y-0 right-0 w-1/3 bg-white"></div> {/* Middle is white */}
-                           <div className="absolute inset-y-0 right-0 w-1/3 bg-red-600 hidden"></div> {/* Wait, simplified flag */}
-                           {/* Using a simple div representation based on code provided */}
-                           <div className="h-full w-full flex">
-                             <div className="h-full w-1/2 bg-[#006233]"></div>
-                             <div className="h-full w-1/2 bg-white relative">
-                                <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 text-[8px] text-[#D21034]">★</div>
-                             </div>
-                           </div>
+                          {/* Algeria Flag Approximation */}
+                          <div className="absolute inset-y-0 left-0 w-1/3 bg-green-700"></div>
+                          <div className="absolute inset-y-0 right-0 w-1/3 bg-white"></div>{" "}
+                          {/* Middle is white */}
+                          <div className="absolute inset-y-0 right-0 w-1/3 bg-red-600 hidden"></div>{" "}
+                          {/* Wait, simplified flag */}
+                          {/* Using a simple div representation based on code provided */}
+                          <div className="h-full w-full flex">
+                            <div className="h-full w-1/2 bg-[#006233]"></div>
+                            <div className="h-full w-1/2 bg-white relative">
+                              <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 text-[8px] text-[#D21034]">
+                                ★
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <span className="font-semibold text-slate-900">+213</span>
+                        <span className="font-semibold text-slate-900">
+                          +213
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className="w-2/3">
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">{t("step1.phone_label")}</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                      {t("step1.phone_label")}
+                    </label>
                     <input
                       type="tel"
                       value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
+                      onChange={(e) =>
+                        setPhoneNumber(e.target.value.replace(/\D/g, ""))
+                      }
                       placeholder={t("step1.phone_placeholder")}
                       className="w-full rounded-lg border border-slate-200 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     />
@@ -206,20 +235,36 @@ export default function AuthContent() {
                   className="w-full flex items-center justify-center gap-2 rounded-xl bg-blue-600 py-3.5 text-base font-bold text-white shadow-lg shadow-blue-600/20 hover:bg-blue-500 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? t("step1.submitting") : t("step1.submit_button")}
-                  {!loading && <Image src="/images/mmb9j5kj-q4w834g.svg" alt="Arrow" width={14} height={14} />}
+                  {!loading && (
+                    <Image
+                      src="/images/mmb9j5kj-q4w834g.svg"
+                      alt="Arrow"
+                      width={14}
+                      height={14}
+                    />
+                  )}
                 </button>
               </div>
 
-              
-
-              
-
               <div className="mt-10 text-center text-xs text-slate-500">
                 <p>
-                  {t("step1.terms_prefix")} <Link href="#" className="font-semibold text-blue-600 hover:underline">{t("step1.terms_link")}</Link> {t("step1.privacy_prefix")}
+                  {t("step1.terms_prefix")}{" "}
+                  <Link
+                    href="#"
+                    className="font-semibold text-blue-600 hover:underline"
+                  >
+                    {t("step1.terms_link")}
+                  </Link>{" "}
+                  {t("step1.privacy_prefix")}
                 </p>
                 <div className="flex justify-center gap-1 mt-1">
-                   <Link href="#" className="font-semibold text-blue-600 hover:underline">{t("step1.privacy_link")}</Link>.
+                  <Link
+                    href="#"
+                    className="font-semibold text-blue-600 hover:underline"
+                  >
+                    {t("step1.privacy_link")}
+                  </Link>
+                  .
                 </div>
               </div>
             </div>
@@ -236,10 +281,14 @@ export default function AuthContent() {
                 />
               </div>
 
-              <h1 className="text-3xl font-bold text-slate-900 mb-2 text-center">{t("step2.title")}</h1>
+              <h1 className="text-3xl font-bold text-slate-900 mb-2 text-center">
+                {t("step2.title")}
+              </h1>
               <p className="text-slate-500 text-center mb-8">
                 {t("step2.subtitle")} <br />
-                <span className="font-bold text-slate-900">+213 {phoneNumber}</span>
+                <span className="font-bold text-slate-900">
+                  +213 {phoneNumber}
+                </span>
               </p>
 
               {error && (
@@ -277,7 +326,7 @@ export default function AuthContent() {
                     <div className="rounded-lg bg-slate-50 px-4 py-2 font-bold text-slate-900 border border-slate-100">
                       {formatTime(timer)}
                     </div>
-                    <button 
+                    <button
                       className="font-bold text-slate-400 hover:text-slate-600 disabled:opacity-50"
                       disabled={timer > 0}
                       onClick={() => setTimer(119)}
@@ -285,14 +334,21 @@ export default function AuthContent() {
                       {t("step2.resend")}
                     </button>
                   </div>
-                  <p className="text-xs text-slate-400">{t("step2.timer_hint")}</p>
+                  <p className="text-xs text-slate-400">
+                    {t("step2.timer_hint")}
+                  </p>
                 </div>
 
-                <button 
+                <button
                   onClick={handleChangeNumber}
                   className="flex items-center justify-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 mt-4"
                 >
-                  <Image src="/images/mmb9j5lh-f8ajbrt.svg" alt="Back" width={10} height={10} />
+                  <Image
+                    src="/images/mmb9j5lh-f8ajbrt.svg"
+                    alt="Back"
+                    width={10}
+                    height={10}
+                  />
                   {t("step2.change_phone")}
                 </button>
               </div>
@@ -310,7 +366,9 @@ export default function AuthContent() {
                 />
               </div>
 
-              <h1 className="text-3xl font-bold text-slate-900 mb-2 text-center">{t("step3.title")}</h1>
+              <h1 className="text-3xl font-bold text-slate-900 mb-2 text-center">
+                {t("step3.title")}
+              </h1>
               <p className="text-slate-500 text-center mb-8">
                 {t("step3.subtitle")}
               </p>
@@ -323,7 +381,9 @@ export default function AuthContent() {
 
               <div className="w-full space-y-6">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">{t("step3.name_label")}</label>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">
+                    {t("step3.name_label")}
+                  </label>
                   <input
                     type="text"
                     value={name}
@@ -344,15 +404,21 @@ export default function AuthContent() {
             </div>
           )}
         </div>
-        
+
         {/* Footer Step 2 style mostly */}
         <div className="mt-12 w-full max-w-4xl border-t border-slate-100 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-           <p>{t("footer.copyright")}</p>
-           <div className="flex gap-6">
-             <Link href="#" className="hover:text-slate-600">{t("footer.privacy")}</Link>
-             <Link href="#" className="hover:text-slate-600">{t("footer.terms")}</Link>
-             <Link href="#" className="hover:text-slate-600">{t("footer.contact")}</Link>
-           </div>
+          <p>{t("footer.copyright")}</p>
+          <div className="flex gap-6">
+            <Link href="#" className="hover:text-slate-600">
+              {t("footer.privacy")}
+            </Link>
+            <Link href="#" className="hover:text-slate-600">
+              {t("footer.terms")}
+            </Link>
+            <Link href="#" className="hover:text-slate-600">
+              {t("footer.contact")}
+            </Link>
+          </div>
         </div>
       </main>
     </div>

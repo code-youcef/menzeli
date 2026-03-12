@@ -1,0 +1,246 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useAuth } from "@/components/providers/auth";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { 
+  Check, 
+  Laptop, 
+  Smartphone, 
+  Pencil, 
+  ShieldCheck, 
+  LogOut, 
+  Trash2,
+  Camera
+} from "lucide-react";
+import { API_URL } from "@/lib/api-config";
+
+export default function ProfilePage() {
+  const { user } = useAuth();
+  const { t } = useTranslation("dashboard");
+
+  // Form states
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
+
+  // Initialize form with user data
+  useEffect(() => {
+    if (user) {
+      if ('name' in user) setName(user.name || "");
+      if ('email' in user) setEmail(user.email || "");
+      setPhone(user.phone || "");
+      console.log({user});
+    }
+  }, [user]);
+
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .substring(0, 2);
+  };
+
+  const getProfileImage = () => {
+    if (user && 'profileImage' in user && user.profileImage) {
+        if(user.profileImage.startsWith('http')) return user.profileImage;
+        return `${API_URL}${user.profileImage}`
+    }
+    return undefined;
+  };
+
+  return (
+    <div className="space-y-8 pb-10">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight">{t("profile_page.title")}</h1>
+        <p className="text-muted-foreground">
+          {t("profile_page.subtitle")}
+        </p>
+      </div>
+
+      {/* Personal Information */}
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("profile_page.personal_info.title")}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-8">
+          {/* Avatar Section */}
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-8">
+            <div className="relative group">
+              <Avatar className="h-24 w-24 border-4 border-white shadow-sm">
+                <AvatarImage src={getProfileImage()} alt={name} />
+                <AvatarFallback className="text-xl bg-primary/10 text-primary">
+                  {getInitials(name || "User")}
+                </AvatarFallback>
+              </Avatar>
+              <button className="absolute bottom-0 right-0 rounded-full bg-primary p-1.5 text-white shadow-md hover:bg-primary/90 transition-colors">
+                <Pencil className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <h3 className="text-lg font-semibold">{name || "User"}</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                {t("profile_page.personal_info.member_since", { 
+                  date: user && 'createdAt' in user && user.createdAt 
+                    ? new Date(user.createdAt).toLocaleDateString() 
+                    : "Jan 15, 2023" 
+                })}
+              </p>
+              <div className="flex flex-wrap justify-center sm:justify-start gap-3">
+                <Button variant="default" size="sm">
+                  {t("profile_page.personal_info.change_photo")}
+                </Button>
+                <Button variant="outline" size="sm" className="text-destructive hover:text-destructive">
+                  {t("profile_page.personal_info.remove")}
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Full Name */}
+            <div className="space-y-2">
+              <Label htmlFor="fullName">{t("profile_page.personal_info.full_name")}</Label>
+              <Input 
+                id="fullName" 
+                value={name} 
+                onChange={(e) => setName(e.target.value)} 
+                placeholder="John Doe" 
+              />
+            </div>
+
+            {/* Email Address */}
+            <div className="space-y-2">
+              <Label htmlFor="email">{t("profile_page.personal_info.email")}</Label>
+              <div className="relative">
+                <Input 
+                  id="email" 
+                  value={email} 
+                  onChange={(e) => setEmail(e.target.value)} 
+                  placeholder="john.doe@example.com"
+                  className="pr-20"
+                />
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-green-600 text-xs font-medium">
+                  <Check className="h-3 w-3" />
+                  {t("profile_page.personal_info.verified")}
+                </div>
+              </div>
+            </div>
+
+            {/* Phone Number */}
+            <div className="space-y-2">
+              <Label htmlFor="phone">{t("profile_page.personal_info.phone")}</Label>
+              <div className="relative">
+                <Input 
+                  id="phone" 
+                  value={phone} 
+                  onChange={(e) => setPhone(e.target.value)} 
+                  placeholder="+1 (555) 000-1234"
+                  className="pr-20"
+                />
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-green-600 text-xs font-medium">
+                  <Check className="h-3 w-3" />
+                  {t("profile_page.personal_info.verified")}
+                </div>
+              </div>
+            </div>
+
+            {/* Account Status */}
+            <div className="space-y-2">
+              <Label>{t("profile_page.personal_info.account_status")}</Label>
+              <div className="flex items-center gap-2 rounded-md border bg-zinc-50 px-3 py-2 text-sm text-zinc-900">
+                <div className={`h-2 w-2 rounded-full ${user && 'isActive' in user && user.isActive ? "bg-green-500" : "bg-red-500"}`} />
+                {user && 'isActive' in user && user.isActive 
+                  ? t("profile_page.personal_info.active")
+                  : t("profile_page.personal_info.inactive")
+                }
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Account Security */}
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("profile_page.security.title")}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* 2FA */}
+          <div className="flex items-center justify-between rounded-lg border p-4">
+            <div className="space-y-0.5">
+              <div className="font-medium">{t("profile_page.security.otp.title")}</div>
+              <div className="text-sm text-muted-foreground">
+                {t("profile_page.security.otp.description")}
+              </div>
+            </div>
+            <Switch 
+              checked={twoFactorEnabled} 
+              onCheckedChange={setTwoFactorEnabled} 
+            />
+          </div>
+
+          <Separator />
+        </CardContent>
+      </Card>
+
+      {/* Account Overview */}
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("profile_page.overview.title")}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-lg bg-zinc-50 p-4 border">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                {t("profile_page.overview.user_id")}
+              </p>
+              <p className="font-mono text-sm font-semibold text-blue-600">#MZL-{user && 'id' in user ? user.id : "8829"}</p>
+            </div>
+            <div className="rounded-lg bg-zinc-50 p-4 border">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                {t("profile_page.overview.joined_date")}
+              </p>
+              <p className="text-sm font-semibold">{user && 'createdAt' in user && user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "15 Jan 2023"}</p>
+            </div>
+            <div className="rounded-lg bg-zinc-50 p-4 border">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                {t("profile_page.overview.last_login")}
+              </p>
+              <p className="text-sm font-semibold">{user && 'lastLoginAt' in user && user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleString() : "Today, 09:42 AM"}</p>
+            </div>
+            <div className="rounded-lg bg-zinc-50 p-4 border">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                {t("profile_page.overview.user_role")}
+              </p>
+              <Badge variant="secondary" className="bg-blue-100 text-blue-700 hover:bg-blue-100 border-none">
+                {user && 'isAdmin' in user && user.isAdmin 
+                  ? t("profile_page.overview.admin")
+                  : t("profile_page.overview.user")
+                }
+              </Badge>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Action Buttons */}
+      <div className="flex items-center justify-end gap-4">
+        <Button variant="ghost">{t("profile_page.actions.cancel")}</Button>
+        <Button>{t("profile_page.actions.save")}</Button>
+      </div>
+    </div>
+  );
+}

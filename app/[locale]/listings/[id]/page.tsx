@@ -17,7 +17,7 @@ export default async function PropertyPage({
       namespaces={["common", "listings"]}
       resources={resources}
     >
-      <div className="min-h-screen">
+      <div className="min-h-screen w-full">
         <PropertyDetails id={parseInt(id)} />
       </div>
     </TranslationsProvider>

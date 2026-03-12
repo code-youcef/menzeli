@@ -9,6 +9,12 @@ const nextConfig = {
         "port": "",
         "pathname": "/**",
       },
+      {
+        protocol: "https",
+        hostname: "menzili-backend.onrender.com",
+        port: "",
+        pathname: "/**",
+      }
     ],
   }
 };

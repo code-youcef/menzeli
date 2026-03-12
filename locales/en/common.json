@@ -19,7 +19,10 @@
     "beds": "Beds",
     "bed": "Bed",
     "baths": "Baths",
-    "bath": "Bath"
+    "bath": "Bath",
+    "ready": "Ready to Move",
+    "under_construction": "Under Construction",
+    "no_listings": "No featured listings found."
   },
   "promo": {
     "find_home": {
@@ -52,5 +55,29 @@
     "login": "Login",
     "signup": "Sign Up",
     "logout": "Logout"
-  }
+  },
+  "dropdown": {
+    "profile": "Profile",
+    "my_listings": "My Listings",
+    "favorites": "Favorites",
+    "settings": "Settings",
+    "help": "Help",
+    "logout": "Log out"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "mark_all_read": "Mark all as read",
+    "empty": "No new notifications",
+    "new_message": "New message from {{user}}",
+    "listing_approved": "Your listing \"{{listing}}\" has been approved",
+    "listing_rejected": "Your listing \"{{listing}}\" has been rejected",
+    "view": "View",
+    "time": {
+      "just_now": "Just now",
+      "min_ago": "{{count}}m ago",
+      "hour_ago": "{{count}}h ago",
+      "day_ago": "{{count}}d ago"
+    }
+  },
+  "back_to_listings": "Back to listings"
 }
